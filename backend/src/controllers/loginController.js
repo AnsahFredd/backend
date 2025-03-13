@@ -41,7 +41,7 @@ const login = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    // Remving password from user object and send response
+    // Removing password from user object and send response
     const { password: _, ...userWithoutPassword } = user;
     res.status(200).json({ userWithoutPassword, token });
   } catch (error) {
