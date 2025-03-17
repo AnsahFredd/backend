@@ -18,7 +18,6 @@ const login = async (req, res) => {
       where: { email },
       select: {
         id: true,
-        email: true,
         password: true,
         firstName: true,
         lastName: true,
@@ -26,7 +25,7 @@ const login = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Invalid email or password" });
     }
 
     // Comparing if the password matches the one in the database
@@ -43,10 +42,10 @@ const login = async (req, res) => {
 
     // Removing password from user object and send response
     const { password: _, ...userWithoutPassword } = user;
-    res.status(200).json({ userWithoutPassword, token });
+    res.status(200).json({ user: userWithoutPassword, token });
   } catch (error) {
     console.error("Login Error:", error);
-    res.status(500).json({ error: "Error logggin in" });
+    res.status(500).json({ error: "Error loggging in" });
   }
 };
 
